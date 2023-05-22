@@ -4,4 +4,8 @@
     <string name="title_history">History</string>
     <string name="title_exchange">Exchange</string>
     <string name="title_profile">Profile</string>
+    <string name="onboard_welcome_msg">Welcome</string>
+    <string name="onboarding_desc_msg">Sign up for Recycash now, and redeem your plastic bottles for points!</string>
+    <string name="btn_msg_register">Register</string>
+    <string name="btn_msg_login">Login</string>
 </resources>

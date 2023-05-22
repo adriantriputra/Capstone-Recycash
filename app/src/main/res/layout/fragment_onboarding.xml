@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="32dp"
+    tools:context=".ui.auth.AuthActivity">
+
+    <TextView
+        android:id="@+id/onboarding_welcome_msg"
+        android:layout_width="296dp"
+        android:layout_height="56dp"
+        android:text="@string/onboard_welcome_msg"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/onboarding_desc_msg"
+        android:layout_width="296dp"
+        android:layout_height="56dp"
+        android:text="@string/onboarding_desc_msg"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/onboarding_welcome_msg"/>
+
+    <ImageView
+        android:id="@+id/recycash_onboarding_img"
+        android:layout_width="450dp"
+        android:layout_height="450dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/recycash_onboarding_img"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/onboarding_desc_msg"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_register"
+        android:layout_width="136dp"
+        android:layout_height="56dp"
+        android:text="@string/btn_msg_register"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:backgroundTint="@color/white"
+        android:textAllCaps="false"
+        android:letterSpacing="0"
+        app:strokeColor="?attr/colorPrimary"
+        app:strokeWidth="1dp"
+        app:cornerRadius="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_login"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_login"
+        android:layout_width="136dp"
+        android:layout_height="56dp"
+        android:text="@string/btn_msg_login"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:letterSpacing="0"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_register"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
