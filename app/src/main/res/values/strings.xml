@@ -5,7 +5,22 @@
     <string name="title_exchange">Exchange</string>
     <string name="title_profile">Profile</string>
     <string name="onboard_welcome_msg">Welcome</string>
-    <string name="onboarding_desc_msg">Sign up for Recycash now, and redeem your plastic bottles for points!</string>
+    <string name="onboarding_desc_msg">Sign up for Recycash now, and exchange your plastic bottles for points!</string>
     <string name="btn_msg_register">Register</string>
     <string name="btn_msg_login">Login</string>
+    <string name="content_desc_backarrow">Back to previous page</string>
+    <string name="tv_login">Login</string>
+    <string name="tv_login_desc">Enter your email and password.</string>
+    <string name="content_desc_login_email">Enter your email</string>
+    <string name="ed_email_hint">Email</string>
+    <string name="ed_password_hint">Password</string>
+    <string name="or">or login with</string>
+    <string name="content_desc_login_google">Login using google</string>
+    <string name="tv_register">Register</string>
+    <string name="tv_register_desc">Please fill in the following fields</string>
+    <string name="content_desc_register_name">Enter your full name here</string>
+    <string name="ed_name_hint">Full name</string>
+    <string name="content_desc_phone">Enter your phone number</string>
+    <string name="ed_phone_hint">Phone number</string>
+    <string name="content_desc_password">Enter your password</string>
 </resources>
