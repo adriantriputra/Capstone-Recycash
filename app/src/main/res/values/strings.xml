@@ -23,4 +23,17 @@
     <string name="content_desc_phone">Enter your phone number</string>
     <string name="ed_phone_hint">Phone number</string>
     <string name="content_desc_password">Enter your password</string>
+    <string name="msg_greeting_placeholder">Hi, user!</string>
+    <string name="msg_reminder">Don\'t forget to exchange your bottle!</string>
+    <string name="tv_points_count_placeholder">20</string>
+    <string name="tv_your_points">Your points:</string>
+    <string name="tv_scan">Scan</string>
+    <string name="tv_wallet">E-Wallet</string>
+    <string name="tv_voucher">Voucher</string>
+    <string name="tv_more_options">More</string>
+    <string name="tv_headline_article">Articles for you</string>
+    <string name="content_desc_img_article">Picture of article</string>
+    <string name="tv_article_placeholder">Article title</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit</string>
+    <string name="error_msg_articles">Gagal menampilkan artikel</string>
 </resources>
