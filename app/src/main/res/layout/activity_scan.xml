@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.scan.ScanActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_scan"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/bg_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/toolbar_scan_title" />
+
+    <FrameLayout
+        android:id="@+id/fl_img"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:background="@drawable/bg_box"
+        android:padding="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_scan">
+
+        <ImageView
+            android:id="@+id/img_bottle"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/content_desc_scan_bottle"
+            app:layout_constraintDimensionRatio="1:1"
+            app:srcCompat="@drawable/ic_img_placeholder" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_img_source"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/font_inter_extrabold"
+        android:gravity="center"
+        android:text="@string/tv_img_source"
+        android:textAlignment="center"
+        android:textColor="?attr/colorOnBackground"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/fl_img"
+        app:layout_constraintStart_toStartOf="@+id/fl_img"
+        app:layout_constraintTop_toBottomOf="@+id/fl_img" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_gallery"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="?attr/backgroundColor"
+        android:fontFamily="@font/font_inter_extrabold"
+        android:letterSpacing="0"
+        android:text="@string/btn_gallery"
+        android:textAllCaps="false"
+        android:textColor="?attr/colorOnBackground"
+        android:textSize="16sp"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/btn_camera"
+        app:layout_constraintStart_toStartOf="@+id/tv_img_source"
+        app:layout_constraintTop_toBottomOf="@+id/tv_img_source"
+        app:strokeColor="?attr/colorPrimary"
+        app:strokeWidth="1dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_camera"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
+        android:fontFamily="@font/font_inter_extrabold"
+        android:letterSpacing="0"
+        android:text="@string/btn_camera"
+        android:textAllCaps="false"
+        android:textColor="?attr/colorOnPrimaryContainer"
+        android:textSize="16sp"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_img_source"
+        app:layout_constraintStart_toEndOf="@+id/btn_gallery"
+        app:layout_constraintTop_toBottomOf="@+id/tv_img_source" />
+
+    <TextView
+        android:id="@+id/tv_scan_reminder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/font_inter"
+        android:text="@string/tv_scan_reminder"
+        android:textAlignment="textStart"
+        android:textColor="?attr/colorOnBackground"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_gallery" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_scan"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:fontFamily="@font/font_inter_extrabold"
+        android:letterSpacing="0"
+        android:text="@string/btn_scan"
+        android:textAllCaps="false"
+        android:textColor="?attr/colorOnPrimaryContainer"
+        android:textSize="16sp"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,5 +35,13 @@
     <string name="content_desc_img_article">Picture of article</string>
     <string name="tv_article_placeholder">Article title</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit</string>
-    <string name="error_msg_articles">Gagal menampilkan artikel</string>
+    <string name="error_msg_articles">Failed to show articles</string>
+    <string name="toolbar_scan_title">Scanning bottle</string>
+    <string name="content_desc_scan_bottle">Bottle image</string>
+    <string name="tv_img_source">Take the image from</string>
+    <string name="btn_gallery">Gallery</string>
+    <string name="btn_camera">Camera</string>
+    <string name="tv_scan_reminder">Important: Make sure to take pictures with good lighting for more accurate scanning results.</string>
+    <string name="btn_scan">Scan</string>
+    <string name="error_permission">Did not get permission.</string>
 </resources>

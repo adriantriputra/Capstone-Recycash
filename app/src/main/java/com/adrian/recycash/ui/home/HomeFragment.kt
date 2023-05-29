@@ -1,5 +1,6 @@
 package com.adrian.recycash.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.adrian.recycash.data.remote.response.Articles
 import com.adrian.recycash.databinding.FragmentHomeBinding
 import com.adrian.recycash.ui._adapter.ArticleAdapter
 import com.adrian.recycash.ui._factory.MainViewModelFactory
+import com.adrian.recycash.ui.scan.ScanActivity
 import com.google.android.material.snackbar.Snackbar
 
 class HomeFragment : Fragment() {
@@ -38,6 +40,13 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val imgScan = binding.imgScan
+        imgScan.isClickable
+        imgScan.setOnClickListener {
+            val scanIntent = Intent(requireContext(), ScanActivity::class.java)
+            startActivity(scanIntent)
+        }
+
         // set up rv
         val layoutManager = LinearLayoutManager(requireContext())
         binding.rvArticles.layoutManager = layoutManager
@@ -47,7 +56,7 @@ class HomeFragment : Fragment() {
         homeViewModel = viewModels<HomeViewModel> { factory }.value
         homeViewModel.getAllArticles()
 
-        // observe
+        // observer for article
         homeViewModel.articlesResult.observe(viewLifecycleOwner){ articlesResult ->
             when (articlesResult) {
                 is Repository.ArticlesResult.Success -> {

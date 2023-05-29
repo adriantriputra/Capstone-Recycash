@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="?attr/backgroundColor" /> <!-- Set the background color of the container -->
+    <corners android:radius="8dp" /> <!-- Set the corner radius of the container -->
+    <stroke
+        android:color="?attr/colorPrimary"
+        android:width="2dp" /> <!-- Set the stroke color and width of the container -->
+</shape>
