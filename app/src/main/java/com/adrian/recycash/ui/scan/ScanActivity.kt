@@ -69,6 +69,12 @@ class ScanActivity : AppCompatActivity() {
         // take img from gallery/camera
         binding.btnCamera.setOnClickListener { startTakePhoto() }
         binding.btnGallery.setOnClickListener { startGallery() }
+
+        binding.btnScan.setOnClickListener {
+            val intent = Intent(this@ScanActivity, ScanOkActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun startTakePhoto() {

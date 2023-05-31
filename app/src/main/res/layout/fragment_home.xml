@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
+        android:paddingTop="?attr/actionBarSize"
         tools:context=".ui.home.HomeFragment">
 
         <androidx.cardview.widget.CardView
@@ -118,6 +119,7 @@
                     android:id="@+id/img_scan"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
+                    android:background="@drawable/ripple_effect"
                     android:src="@drawable/ic_camera"
                     app:civ_border_color="?attr/colorPrimary"
                     app:civ_border_width="1dp"
@@ -128,7 +130,7 @@
                 <TextView
                     android:id="@+id/tv_scan"
                     android:layout_width="0dp"
-                    android:layout_height="20dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/font_inter"
                     android:text="@string/tv_scan"
@@ -145,6 +147,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginStart="16dp"
+                    android:background="@drawable/ripple_effect"
                     android:src="@drawable/ic_wallet"
                     app:civ_border_color="?attr/colorPrimary"
                     app:civ_border_width="1dp"
@@ -172,6 +175,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginStart="16dp"
+                    android:background="@drawable/ripple_effect"
                     android:src="@drawable/ic_voucher"
                     app:civ_border_color="?attr/colorPrimary"
                     app:civ_border_width="1dp"
@@ -182,7 +186,7 @@
                 <TextView
                     android:id="@+id/tv_voucher"
                     android:layout_width="56dp"
-                    android:layout_height="20dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/font_inter"
                     android:text="@string/tv_voucher"
@@ -199,6 +203,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginStart="16dp"
+                    android:background="@drawable/ripple_effect"
                     android:src="@drawable/ic_more"
                     app:civ_border_color="?attr/colorPrimary"
                     app:civ_border_width="1dp"
@@ -209,7 +214,7 @@
                 <TextView
                     android:id="@+id/tv_more_options"
                     android:layout_width="0dp"
-                    android:layout_height="20dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/font_inter"
                     android:text="@string/tv_more_options"
@@ -244,7 +249,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_headline_article"
-            tools:listitem="@layout/item_articles"/>
+            tools:listitem="@layout/item_articles" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

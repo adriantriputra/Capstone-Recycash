@@ -44,4 +44,18 @@
     <string name="tv_scan_reminder">Important: Make sure to take pictures with good lighting for more accurate scanning results.</string>
     <string name="btn_scan">Scan</string>
     <string name="error_permission">Did not get permission.</string>
+    <string name="content_desc_scan_success">Scan successful</string>
+    <string name="tv_success">Successfully earned points</string>
+    <string name="tv_points">Points earned</string>
+    <string name="tv_points_count">20</string>
+    <string name="tv_point_ok_msg">Points will be added directly to your account</string>
+    <string name="btn_msg_home">Home</string>
+    <string name="btn_msg_scan">Scan again</string>
+    <string name="content_desc_cover">cover image</string>
+    <string name="tv_profile_name_placeholder">User</string>
+    <string name="tv_profile_email_placeholder">user@example.com</string>
+    <string name="tv_phone_title">Phone Number</string>
+    <string name="tv_phone_number">081234567891</string>
+    <string name="tv_about">About Recycash</string>
+    <string name="btn_logout">Log out</string>
 </resources>
