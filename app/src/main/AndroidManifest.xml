@@ -33,22 +33,27 @@
         android:theme="@style/Theme.Recycash"
         tools:targetApi="31">
         <activity
-            android:name=".ui.scan.ScanOkActivity"
+            android:name=".ui.profile.about.AboutActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.scan.ScanActivity"
+            android:name=".ui.home.scan.ScanOkActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.home.scan.ScanActivity"
             android:exported="false" />
         <activity
             android:name=".ui.auth.AuthActivity"
-            android:exported="true" />
-        <activity
-            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+
         </activity>
 
         <provider

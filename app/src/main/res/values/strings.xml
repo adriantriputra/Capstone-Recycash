@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">Recycash</string>
-    <string name="title_home">Home</string>
-    <string name="title_history">History</string>
     <string name="title_exchange">Exchange</string>
     <string name="title_profile">Profile</string>
+    <string name="title_home">Home</string>
     <string name="onboard_welcome_msg">Welcome</string>
     <string name="onboarding_desc_msg">Sign up for Recycash now, and exchange your plastic bottles for points!</string>
     <string name="btn_msg_register">Register</string>
@@ -58,4 +57,28 @@
     <string name="tv_phone_number">081234567891</string>
     <string name="tv_about">About Recycash</string>
     <string name="btn_logout">Log out</string>
+    <string name="tv_change_password">Change Password</string>
+    <string name="tv_change_language">Change Language</string>
+    <string name="title_history">History</string>
+    <string name="empty_fields">Please fill out all fields</string>
+    <string name="logout_confirmation">Do you want to log out?</string>
+    <string name="logout_yes">Yes</string>
+    <string name="logout_no">No</string>
+    <string name="msg_phone_number_notfound">No phone number registered.</string>
+    <string name="tv_headline_about">About Recycash</string>
+    <string name="tv_content_about">Recycash is a recycling application that empowers users to exchange their plastic bottles for points, subsequently redeemable for monetary rewards.</string>
+    <string name="tv_recycash_team">The Recycash Team</string>
+    <string name="content_desc_linkedin">linked in profile</string>
+    <string name="member1">Adrian Triputra</string>
+    <string name="content_member1">A304DSX2018 - Mobile Development</string>
+    <string name="member2">Muhammad Rizki Adiyaksa</string>
+    <string name="content_member2">M013DSX0004 - Machine Learning</string>
+    <string name="member3">Muhammad Zidan Khairan</string>
+    <string name="content_member3">M295DSX1584 - Machine Learning</string>
+    <string name="member4">Muhammad Akmalludin Daffa</string>
+    <string name="contenet_member4">M151DSX2488 - Machine Learning</string>
+    <string name="member5">Muhammad Alvin Hilmy</string>
+    <string name="content_member5">C125DKX4578 - Cloud Computing</string>
+    <string name="member6">Putri Intan Amalia Dahlan</string>
+    <string name="content_member6">C360DSY0966 - Cloud Computing</string>
 </resources>

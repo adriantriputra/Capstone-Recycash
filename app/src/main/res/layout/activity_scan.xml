@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.scan.ScanActivity">
+    tools:context=".ui.home.scan.ScanActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_scan"
@@ -32,6 +32,7 @@
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:layout_gravity="center"
+            android:scaleType="centerCrop"
             android:contentDescription="@string/content_desc_scan_bottle"
             app:layout_constraintDimensionRatio="1:1"
             app:srcCompat="@drawable/ic_img_placeholder" />

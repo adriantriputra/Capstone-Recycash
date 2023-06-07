@@ -14,10 +14,15 @@ class HomeViewModel(
     private val _articlesResult = MutableLiveData<Repository.ArticlesResult>()
     val articlesResult: LiveData<Repository.ArticlesResult> = _articlesResult
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
     fun getAllArticles() {
+        _isLoading.postValue(true)
         viewModelScope.launch {
             val result = repository.getAllArticles()
             _articlesResult.postValue(result)
+            _isLoading.postValue(false)
         }
     }
 }
