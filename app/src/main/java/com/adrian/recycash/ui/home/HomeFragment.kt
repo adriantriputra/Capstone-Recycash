@@ -1,18 +1,24 @@
 package com.adrian.recycash.ui.home
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adrian.recycash.R
 import com.adrian.recycash.data.di.Repository
 import com.adrian.recycash.data.remote.response.Articles
+import com.adrian.recycash.data.remote.response.UserResponse
 import com.adrian.recycash.databinding.FragmentHomeBinding
+import com.adrian.recycash.helper.LoginPreferences
 import com.adrian.recycash.helper.loadImage
 import com.adrian.recycash.ui._adapter.ArticleAdapter
 import com.adrian.recycash.ui._factory.MainViewModelFactory
@@ -22,16 +28,21 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "login_datastore")
+
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var auth: FirebaseAuth
 
+    private lateinit var auth: FirebaseAuth
+    private lateinit var loginPreferences: LoginPreferences
     private lateinit var homeViewModel: HomeViewModel
     private val factory: MainViewModelFactory by lazy {
-        MainViewModelFactory.getInstance()
+        MainViewModelFactory.getInstance(loginPreferences)
     }
+
+    private var isGetUserCalled = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +55,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        loginPreferences = LoginPreferences.getInstance(requireContext().dataStore)
 
         val imgScan = binding.imgScan
         imgScan.isClickable
@@ -84,21 +97,53 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // firebase user
-        getFirebaseUser()
+        // get user
+        homeViewModel.userResult.observe(viewLifecycleOwner) { userResult ->
+            when (userResult) {
+                is Repository.UserResult.Success -> {
+                    updateUI(userResult.response)
+                    isGetUserCalled = true
+                }
+
+                is Repository.UserResult.Error -> {
+                    Snackbar.make(binding.root, "Failed to get user", Snackbar.LENGTH_SHORT).show()
+                    Log.d(TAG, "onRespose error: ${userResult.message}")
+                }
+            }
+        }
+
+        if (!isGetUserCalled){
+            getUserInfo()
+        }
     }
 
-    private fun getFirebaseUser() {
-        auth = Firebase.auth
-        val firebaseUser = auth.currentUser
-
+    private fun updateUI(response: UserResponse) {
         with(binding) {
             tvUserGreet.text = buildString {
                 append("Hi, ")
-                append(firebaseUser?.displayName)
+                append(response.name)
                 append("!")
             }
-            imgProfile.loadImage(firebaseUser?.photoUrl.toString())
+        }
+    }
+
+    private fun getUserInfo() {
+        auth = Firebase.auth
+        val firebaseUser = auth.currentUser
+
+        if (firebaseUser != null) {
+            with(binding) {
+                tvUserGreet.text = buildString {
+                    append("Hi, ")
+                    append(firebaseUser.displayName)
+                    append("!")
+                }
+                if (firebaseUser.photoUrl.toString().isNotEmpty()){
+                    imgProfile.loadImage(firebaseUser.photoUrl.toString())
+                }
+            }
+        } else {
+            homeViewModel.getUser()
         }
     }
 

@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.adrian.recycash.R
 import com.adrian.recycash.data.di.Repository
 import com.adrian.recycash.databinding.FragmentRegisterBinding
-import com.adrian.recycash.ui._factory.MainViewModelFactory
+import com.adrian.recycash.ui._factory.AuthViewModelFactory
 import com.adrian.recycash.ui.auth.login.LoginFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
@@ -22,8 +22,8 @@ class RegisterFragment : Fragment() {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
     private lateinit var registerViewModel: RegisterViewModel
-    private val factory: MainViewModelFactory by lazy {
-        MainViewModelFactory.getInstance()
+    private val factory: AuthViewModelFactory by lazy {
+        AuthViewModelFactory.getInstance()
     }
 
     override fun onCreateView(

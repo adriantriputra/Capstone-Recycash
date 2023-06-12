@@ -81,4 +81,12 @@
     <string name="content_member5">C125DKX4578 - Cloud Computing</string>
     <string name="member6">Putri Intan Amalia Dahlan</string>
     <string name="content_member6">C360DSY0966 - Cloud Computing</string>
+    <string name="content_desc_plastic_type">Exit</string>
+    <string name="tv_scan_success">Scan Successful!</string>
+    <string name="tv_plastic_scan_desc">One more step! What type of plastic did you scan?</string>
+    <string name="tv_plastic_type">I don\'t know the type of plastic I scanned.</string>
+    <string name="tv_continue">Continue</string>
+    <string name="content_desc_history">empty</string>
+    <string name="tv_desc_history_empty">Hmm, looks like you still don\'t have any transactions.</string>
+    <string name="tv_history_title">History</string>
 </resources>

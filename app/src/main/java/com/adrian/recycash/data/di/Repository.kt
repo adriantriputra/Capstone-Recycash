@@ -3,15 +3,17 @@ package com.adrian.recycash.data.di
 import android.util.Log
 import com.adrian.recycash.data.remote.response.Articles
 import com.adrian.recycash.data.remote.response.ArticlesResponse
+import com.adrian.recycash.data.remote.response.LoginRequest
+import com.adrian.recycash.data.remote.response.LoginResponse
 import com.adrian.recycash.data.remote.response.RegisterRequest
 import com.adrian.recycash.data.remote.response.RegisterResponse
+import com.adrian.recycash.data.remote.response.UserResponse
 import com.adrian.recycash.data.remote.retrofit.ArticlesApiConfig
 import com.adrian.recycash.data.remote.retrofit.UserApiConfig
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -57,7 +59,12 @@ class Repository private constructor(
         }
     }
 
-    suspend fun register(name: String, email: String, phoneNumber: String, password: String): RegisterResult {
+    suspend fun register(
+        name: String,
+        email: String,
+        phoneNumber: String,
+        password: String
+    ): RegisterResult {
         val registerRequest = RegisterRequest(name, email, phoneNumber, password)
         val client = userApiConfig.getApiService.register(registerRequest)
 
@@ -97,6 +104,75 @@ class Repository private constructor(
         }
     }
 
+    suspend fun login(email: String, password: String): LoginResult {
+        val loginRequest = LoginRequest(email, password)
+        val client = userApiConfig.getApiService.login(loginRequest)
+
+        return suspendCoroutine { continuation ->
+            client.enqueue(object : Callback<LoginResponse> {
+                override fun onResponse(
+                    call: Call<LoginResponse>,
+                    response: Response<LoginResponse>
+                ) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        val token = responseBody.token
+                        token?.let { LoginResult.Success(it) }?.let { continuation.resume(it) }
+                    } else {
+                        try {
+                            val errorResponse = Gson().fromJson(
+                                response.errorBody()?.charStream(),
+                                LoginResponse::class.java
+                            )
+                            val errorMessage = errorResponse?.message ?: "Unknown error occurred"
+                            Log.e(TAG, "onResponse error: $errorMessage")
+                            continuation.resume(LoginResult.Error(errorMessage))
+                        } catch (e: Exception) {
+                            val errorMessage = "Unknown error occurred"
+                            Log.e(TAG, "onFailure: ${response.message()}")
+                            continuation.resume(LoginResult.Error(errorMessage))
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                    val errorMessage = t.message.toString()
+                    Log.e(TAG, "onFailure: $errorMessage")
+                    continuation.resume(LoginResult.Error(errorMessage))
+                }
+            })
+        }
+    }
+
+    suspend fun getUser(token: String): UserResult {
+        val client = userApiConfig.getApiService.getUser(token)
+
+        return suspendCoroutine { continuation ->
+            client.enqueue(object : Callback<UserResponse> {
+                override fun onResponse(
+                    call: Call<UserResponse>,
+                    response: Response<UserResponse>
+                ) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        val result = response.body()
+                        result?.let { UserResult.Success(it) }?.let { continuation.resume(it) }
+                    } else {
+                        val errorMessage = "Unknown error occurred"
+                        Log.e(TAG, "onFailure: ${response.message()}")
+                        continuation.resume(UserResult.Error(errorMessage))
+                    }
+                }
+
+                override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                    val errorMessage = t.message.toString()
+                    Log.e(TAG, "onFailure: $errorMessage")
+                    continuation.resume(UserResult.Error(errorMessage))
+                }
+            })
+        }
+    }
+
     sealed class ArticlesResult {
         data class Success(val articles: ArrayList<Articles>) : ArticlesResult()
         data class Error(val message: String) : ArticlesResult()
@@ -105,6 +181,16 @@ class Repository private constructor(
     sealed class RegisterResult {
         data class Success(val message: String?) : RegisterResult()
         data class Error(val message: String) : RegisterResult()
+    }
+
+    sealed class LoginResult {
+        data class Success(val token: String) : LoginResult()
+        data class Error(val message: String) : LoginResult()
+    }
+
+    sealed class UserResult {
+        data class Success(val response: UserResponse) : UserResult()
+        data class Error(val message: String) : UserResult()
     }
 
     companion object {

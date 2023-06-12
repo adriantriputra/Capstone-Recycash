@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object UserApiConfig {
 
-    private const val BASE_URL = "http://34.101.46.152:3000/"
+    private const val BASE_URL = "https://recycash.my.id:3000/"
 
     val getApiService: UserApiService by lazy {
         val loggingInterceptor = if(BuildConfig.DEBUG) {

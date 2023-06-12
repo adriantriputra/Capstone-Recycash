@@ -4,20 +4,23 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.adrian.recycash.data.di.Injection
 import com.adrian.recycash.data.di.Repository
-import com.adrian.recycash.ui.auth.register.RegisterViewModel
+import com.adrian.recycash.helper.LoginPreferences
 import com.adrian.recycash.ui.home.HomeViewModel
+import com.adrian.recycash.ui.profile.ProfileViewModel
 
 class MainViewModelFactory private constructor(
     private val repository: Repository,
+    private val preferences: LoginPreferences
 ) :
     ViewModelProvider.NewInstanceFactory() {
+
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-            return HomeViewModel(repository) as T
+            return HomeViewModel(repository, preferences) as T
         }
-        if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
-            return RegisterViewModel(repository) as T
+        if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
+            return ProfileViewModel(repository, preferences) as T
         }
         throw java.lang.IllegalArgumentException("Unknown ViewModel Class: " + modelClass.name)
     }
@@ -25,10 +28,11 @@ class MainViewModelFactory private constructor(
     companion object {
         @Volatile
         private var instance: MainViewModelFactory? = null
-        fun getInstance(): MainViewModelFactory =
+        fun getInstance(preferences: LoginPreferences): MainViewModelFactory =
             instance ?: synchronized(this) {
                 instance ?: MainViewModelFactory(
                     Injection.provideRepository(),
+                    preferences
                 )
             }.also { instance = it }
     }

@@ -67,4 +67,7 @@ dependencies {
 
     // tf lite
     implementation 'org.tensorflow:tensorflow-lite:2.7.0'
+
+    // data store
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
 }

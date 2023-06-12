@@ -21,6 +21,7 @@ import com.adrian.recycash.R
 import com.adrian.recycash.databinding.ActivityScanBinding
 import com.adrian.recycash.helper.createCustomTempFile
 import com.adrian.recycash.helper.uriToFile
+import com.google.android.material.snackbar.Snackbar
 import org.tensorflow.lite.Interpreter
 import java.io.File
 import java.io.FileInputStream
@@ -95,7 +96,15 @@ class ScanActivity : AppCompatActivity() {
                 val floatValue = inputBuffer.getFloat(i * 4) // Each float occupies 4 bytes
                 Log.d(TAG, "Input value at position $i: $floatValue")
             }
-            runInference(inputBuffer, tfliteInterpreter)
+            val result = runInference(inputBuffer, tfliteInterpreter)
+
+            if (result == "Bottle"){
+                val intentScanOk = Intent(this@ScanActivity, PlasticTypeActivity::class.java)
+                startActivity(intentScanOk)
+                finish()
+            } else {
+                Snackbar.make(binding.root, "Scanning failed! Inputted image is not a bottle.", Snackbar.LENGTH_SHORT).show()
+            }
         }
     }
 

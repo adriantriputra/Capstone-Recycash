@@ -33,6 +33,18 @@
         android:theme="@style/Theme.Recycash"
         tools:targetApi="31">
         <activity
+            android:name=".SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.home.scan.PlasticTypeActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.profile.about.AboutActivity"
             android:exported="false" />
         <activity
@@ -43,18 +55,10 @@
             android:exported="false" />
         <activity
             android:name=".ui.auth.AuthActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
