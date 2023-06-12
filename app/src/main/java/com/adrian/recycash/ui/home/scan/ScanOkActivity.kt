@@ -27,4 +27,9 @@ class ScanOkActivity : AppCompatActivity() {
             finish()
         }
     }
+
+    @Deprecated("Deprecated in Java", ReplaceWith("finish()"))
+    override fun onBackPressed() {
+        finish()
+    }
 }

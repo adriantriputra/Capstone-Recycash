@@ -82,7 +82,7 @@ class ProfileFragment : Fragment() {
         profileViewModel.userResult.observe(viewLifecycleOwner) { userResult ->
             when (userResult) {
                 is Repository.UserResult.Success -> {
-                    updateUI(userResult.response)
+                    updateUI(userResult.user)
                     isGetUserCalled = true
                 }
 

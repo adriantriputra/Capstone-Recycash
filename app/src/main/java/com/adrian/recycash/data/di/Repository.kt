@@ -1,10 +1,12 @@
 package com.adrian.recycash.data.di
 
 import android.util.Log
+import com.adrian.recycash.data.remote.response.AddPointsResponse
 import com.adrian.recycash.data.remote.response.Articles
 import com.adrian.recycash.data.remote.response.ArticlesResponse
 import com.adrian.recycash.data.remote.response.LoginRequest
 import com.adrian.recycash.data.remote.response.LoginResponse
+import com.adrian.recycash.data.remote.response.PointsResponse
 import com.adrian.recycash.data.remote.response.RegisterRequest
 import com.adrian.recycash.data.remote.response.RegisterResponse
 import com.adrian.recycash.data.remote.response.UserResponse
@@ -173,6 +175,92 @@ class Repository private constructor(
         }
     }
 
+    suspend fun getTotalPoints(token: String): PointsResult {
+        val client = userApiConfig.getApiService.getTotalPoints(token)
+
+        return suspendCoroutine { continuation ->
+            client.enqueue(object : Callback<PointsResponse> {
+                override fun onResponse(
+                    call: Call<PointsResponse>,
+                    response: Response<PointsResponse>
+                ) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        val result = response.body()
+                        result?.let { PointsResult.Success(it) }?.let { continuation.resume(it) }
+                    } else {
+                        val errorMessage = "Unknown error occurred"
+                        Log.e(TAG, "onFailure: ${response.message()}")
+                        continuation.resume(PointsResult.Error(errorMessage))
+                    }
+                }
+
+                override fun onFailure(call: Call<PointsResponse>, t: Throwable) {
+                    val errorMessage = t.message.toString()
+                    Log.e(TAG, "onFailure: $errorMessage")
+                    continuation.resume(PointsResult.Error(errorMessage))
+                }
+            })
+        }
+    }
+
+    suspend fun addPoints(token: String): AddPointsResult {
+        val client = userApiConfig.getApiService.addPoints(token)
+        return suspendCoroutine { continuation ->
+            client.enqueue(object : Callback<AddPointsResponse> {
+                override fun onResponse(
+                    call: Call<AddPointsResponse>,
+                    response: Response<AddPointsResponse>
+                ) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        val result = response.body()
+                        result?.let { AddPointsResult.Success(it) }?.let { continuation.resume(it) }
+                    } else {
+                        val errorMessage = "Unknown error occurred"
+                        Log.e(TAG, "onFailure: ${response.message()}")
+                        continuation.resume(AddPointsResult.Error(errorMessage))
+                    }
+                }
+
+                override fun onFailure(call: Call<AddPointsResponse>, t: Throwable) {
+                    val errorMessage = t.message.toString()
+                    Log.e(TAG, "onFailure: $errorMessage")
+                    continuation.resume(AddPointsResult.Error(errorMessage))
+                }
+            })
+        }
+    }
+
+    suspend fun savePoints(token: String): AddPointsResult {
+        val client = userApiConfig.getApiService.savePoints(token)
+
+        return suspendCoroutine {  continuation ->
+            client.enqueue(object : Callback<AddPointsResponse> {
+                override fun onResponse(
+                    call: Call<AddPointsResponse>,
+                    response: Response<AddPointsResponse>
+                ) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        val result = response.body()
+                        result?.let { AddPointsResult.Success(it) }?.let { continuation.resume(it) }
+                    } else {
+                        val errorMessage = "Unknown error occurred"
+                        Log.e(TAG, "onFailure: ${response.message()}")
+                        continuation.resume(AddPointsResult.Error(errorMessage))
+                    }
+                }
+
+                override fun onFailure(call: Call<AddPointsResponse>, t: Throwable) {
+                    val errorMessage = t.message.toString()
+                    Log.e(TAG, "onFailure: $errorMessage")
+                    continuation.resume(AddPointsResult.Error(errorMessage))
+                }
+            })
+        }
+    }
+
     sealed class ArticlesResult {
         data class Success(val articles: ArrayList<Articles>) : ArticlesResult()
         data class Error(val message: String) : ArticlesResult()
@@ -189,8 +277,18 @@ class Repository private constructor(
     }
 
     sealed class UserResult {
-        data class Success(val response: UserResponse) : UserResult()
+        data class Success(val user: UserResponse) : UserResult()
         data class Error(val message: String) : UserResult()
+    }
+
+    sealed class PointsResult {
+        data class Success(val points: PointsResponse) : PointsResult()
+        data class Error(val message: String) : PointsResult()
+    }
+
+    sealed class AddPointsResult {
+        data class Success(val response: AddPointsResponse) : AddPointsResult()
+        data class Error(val message: String) : AddPointsResult()
     }
 
     companion object {

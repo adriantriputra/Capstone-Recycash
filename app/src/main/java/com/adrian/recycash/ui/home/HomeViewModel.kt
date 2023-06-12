@@ -22,6 +22,9 @@ class HomeViewModel(
     private val _userResult = MutableLiveData<Repository.UserResult>()
     val userResult: LiveData<Repository.UserResult> = _userResult
 
+    private val _pointsResult = MutableLiveData<Repository.PointsResult>()
+    val pointsResult: LiveData<Repository.PointsResult> = _pointsResult
+
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -42,6 +45,18 @@ class HomeViewModel(
                 .first()
             val result = repository.getUser(token)
             _userResult.postValue(result)
+            _isLoading.postValue(false)
+        }
+    }
+
+    fun getTotalPoints() {
+        _isLoading.postValue(true)
+        viewModelScope.launch {
+            val token: String = preferences.tokenFlow
+                .filterNotNull()
+                .first()
+            val result = repository.getTotalPoints(token)
+            _pointsResult.postValue(result)
             _isLoading.postValue(false)
         }
     }

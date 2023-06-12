@@ -1,6 +1,7 @@
 package com.adrian.recycash.ui.home.scan
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -10,17 +11,25 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import com.adrian.recycash.R
+import com.adrian.recycash.data.di.Repository
 import com.adrian.recycash.databinding.ActivityScanBinding
+import com.adrian.recycash.helper.LoginPreferences
 import com.adrian.recycash.helper.createCustomTempFile
 import com.adrian.recycash.helper.uriToFile
+import com.adrian.recycash.ui._factory.MainViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import org.tensorflow.lite.Interpreter
 import java.io.File
@@ -30,6 +39,8 @@ import java.nio.ByteOrder
 import java.nio.MappedByteBuffer
 import java.nio.channels.FileChannel
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "login_datastore")
+
 class ScanActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityScanBinding
@@ -37,6 +48,12 @@ class ScanActivity : AppCompatActivity() {
     private var getFile: File? = null
     private lateinit var tfliteInterpreter: Interpreter
     private val tfliteModel: MappedByteBuffer by lazy { loadModel() }
+
+    private lateinit var loginPreferences: LoginPreferences
+    private lateinit var scanViewModel: ScanViewModel
+    private val factory: MainViewModelFactory by lazy {
+        MainViewModelFactory.getInstance(loginPreferences)
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -65,6 +82,11 @@ class ScanActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityScanBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        loginPreferences = LoginPreferences.getInstance(this.dataStore)
+
+        // initialize viewModel
+        scanViewModel = viewModels<ScanViewModel> { factory }.value
 
         if (!allPermissionsGranted()) {
             ActivityCompat.requestPermissions(
@@ -99,13 +121,35 @@ class ScanActivity : AppCompatActivity() {
             val result = runInference(inputBuffer, tfliteInterpreter)
 
             if (result == "Bottle"){
-                val intentScanOk = Intent(this@ScanActivity, PlasticTypeActivity::class.java)
-                startActivity(intentScanOk)
-                finish()
+                scanViewModel.addPoints()
             } else {
-                Snackbar.make(binding.root, "Scanning failed! Inputted image is not a bottle.", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(binding.root, getString(R.string.scan_failed), Snackbar.LENGTH_SHORT).show()
             }
         }
+
+        scanViewModel.addPointsResult.observe(this){ addPointsResult ->
+            when (addPointsResult){
+                is Repository.AddPointsResult.Success -> {
+                    Toast.makeText(this, getString(R.string.scan_success), Toast.LENGTH_SHORT).show()
+                    val intentScanOk = Intent(this@ScanActivity, PlasticTypeActivity::class.java)
+                    startActivity(intentScanOk)
+                    finish()
+                }
+                is Repository.AddPointsResult.Error -> {
+                    Toast.makeText(this, getString(R.string.failed_fetch_points), Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "onResponse error: ${addPointsResult.message}")
+                }
+            }
+        }
+
+        //observer for progress bar
+        scanViewModel.isLoading.observe(this) {
+            showProgressBar(it)
+        }
+    }
+
+    private fun showProgressBar(value: Boolean) {
+        binding.progressBar.visibility = if (value) View.VISIBLE else View.GONE
     }
 
     private fun loadModel(): MappedByteBuffer {

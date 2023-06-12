@@ -24,7 +24,7 @@
     <string name="content_desc_password">Enter your password</string>
     <string name="msg_greeting_placeholder">Hi, user!</string>
     <string name="msg_reminder">Don\'t forget to exchange your bottle!</string>
-    <string name="tv_points_count_placeholder">20</string>
+    <string name="tv_points_count_placeholder">0</string>
     <string name="tv_your_points">Your points:</string>
     <string name="tv_scan">Scan</string>
     <string name="tv_wallet">E-Wallet</string>
@@ -46,7 +46,7 @@
     <string name="content_desc_scan_success">Scan successful</string>
     <string name="tv_success">Successfully earned points</string>
     <string name="tv_points">Points earned</string>
-    <string name="tv_points_count">20</string>
+    <string name="tv_points_count">10</string>
     <string name="tv_point_ok_msg">Points will be added directly to your account</string>
     <string name="btn_msg_home">Home</string>
     <string name="btn_msg_scan">Scan again</string>
@@ -89,4 +89,8 @@
     <string name="content_desc_history">empty</string>
     <string name="tv_desc_history_empty">Hmm, looks like you still don\'t have any transactions.</string>
     <string name="tv_history_title">History</string>
+    <string name="scan_failed">Scanning failed! Inputted image is not a bottle.</string>
+    <string name="scan_success">Scan successful! One more step!</string>
+    <string name="failed_fetch_points">Failed to fetch points.</string>
+    <string name="points_success">Points added successfully!</string>
 </resources>

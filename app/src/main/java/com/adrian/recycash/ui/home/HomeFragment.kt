@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.adrian.recycash.R
 import com.adrian.recycash.data.di.Repository
 import com.adrian.recycash.data.remote.response.Articles
+import com.adrian.recycash.data.remote.response.PointsResponse
 import com.adrian.recycash.data.remote.response.UserResponse
 import com.adrian.recycash.databinding.FragmentHomeBinding
 import com.adrian.recycash.helper.LoginPreferences
@@ -79,6 +80,24 @@ class HomeFragment : Fragment() {
             showProgressBar(it)
         }
 
+        // observer for total points
+        homeViewModel.pointsResult.observe(viewLifecycleOwner) { pointsResult ->
+            when (pointsResult) {
+                is Repository.PointsResult.Success -> {
+                    if (pointsResult.points.totalPoint.toString() == "null"){
+                        // Do nothing
+                    }
+                    else {
+                        setPoints(pointsResult.points)
+                    }
+                }
+                is Repository.PointsResult.Error -> {
+                    Snackbar.make(binding.root, "Failed to fetch points", Snackbar.LENGTH_SHORT).show()
+                    Log.d(TAG, "onResponse error: ${pointsResult.message}")
+                }
+            }
+        }
+
         // observer for article
         homeViewModel.articlesResult.observe(viewLifecycleOwner) { articlesResult ->
             when (articlesResult) {
@@ -101,19 +120,25 @@ class HomeFragment : Fragment() {
         homeViewModel.userResult.observe(viewLifecycleOwner) { userResult ->
             when (userResult) {
                 is Repository.UserResult.Success -> {
-                    updateUI(userResult.response)
+                    updateUI(userResult.user)
                     isGetUserCalled = true
                 }
 
                 is Repository.UserResult.Error -> {
                     Snackbar.make(binding.root, "Failed to get user", Snackbar.LENGTH_SHORT).show()
-                    Log.d(TAG, "onRespose error: ${userResult.message}")
+                    Log.d(TAG, "onResponse error: ${userResult.message}")
                 }
             }
         }
 
         if (!isGetUserCalled){
             getUserInfo()
+        }
+    }
+
+    private fun setPoints(points: PointsResponse) {
+        with (binding) {
+            tvPointsCount.text = points.totalPoint.toString()
         }
     }
 
@@ -144,6 +169,7 @@ class HomeFragment : Fragment() {
             }
         } else {
             homeViewModel.getUser()
+            homeViewModel.getTotalPoints()
         }
     }
 
@@ -154,6 +180,12 @@ class HomeFragment : Fragment() {
 
     private fun showProgressBar(value: Boolean) {
         binding.progressBar.visibility = if (value) View.VISIBLE else View.GONE
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        homeViewModel.getTotalPoints()
     }
 
     override fun onDestroyView() {

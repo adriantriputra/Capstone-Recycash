@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:text="@string/tv_desc_history_empty"
             android:fontFamily="@font/font_inter_extrabold"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:layout_marginTop="48dp"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"

@@ -25,7 +25,7 @@
     <string name="content_desc_password">Masukkan kata sandi</string>
     <string name="msg_greeting_placeholder">Hai, user!</string>
     <string name="msg_reminder">Jangan lupa tukar botolmu, ya!</string>
-    <string name="tv_points_count_placeholder">20</string>
+    <string name="tv_points_count_placeholder">0</string>
     <string name="tv_your_points">Poin kamu:</string>
     <string name="tv_scan">Pindai</string>
     <string name="tv_wallet">E-Wallet</string>
@@ -47,7 +47,7 @@
     <string name="content_desc_scan_success">Pindai berhasil</string>
     <string name="tv_success">Berhasil mendapat poin</string>
     <string name="tv_points">Poin didapatkan</string>
-    <string name="tv_points_count">20</string>
+    <string name="tv_points_count">10</string>
     <string name="tv_point_ok_msg">Poin akan langsung ditambahkan ke akunmu</string>
     <string name="btn_msg_home">Beranda</string>
     <string name="btn_msg_scan">Pindai lagi</string>
@@ -90,4 +90,8 @@
     <string name="content_desc_history">kosong</string>
     <string name="tv_desc_history_empty">Hmm, sepertinya kamu belum melakukan transaksi apapun</string>
     <string name="tv_history_title">Riwayat</string>
+    <string name="scan_failed">Pindai gagal! Gambar yang diinput bukan botol.</string>
+    <string name="scan_success">Pindai berhasil. Satu Langkah lagi!</string>
+    <string name="failed_fetch_points">Gagal untuk fetch poin</string>
+    <string name="points_success">Poin berhasil ditambahkan!</string>
 </resources>

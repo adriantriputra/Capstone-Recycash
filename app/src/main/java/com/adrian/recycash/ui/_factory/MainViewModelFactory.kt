@@ -6,6 +6,8 @@ import com.adrian.recycash.data.di.Injection
 import com.adrian.recycash.data.di.Repository
 import com.adrian.recycash.helper.LoginPreferences
 import com.adrian.recycash.ui.home.HomeViewModel
+import com.adrian.recycash.ui.home.scan.PlasticTypeViewModel
+import com.adrian.recycash.ui.home.scan.ScanViewModel
 import com.adrian.recycash.ui.profile.ProfileViewModel
 
 class MainViewModelFactory private constructor(
@@ -21,6 +23,12 @@ class MainViewModelFactory private constructor(
         }
         if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
             return ProfileViewModel(repository, preferences) as T
+        }
+        if (modelClass.isAssignableFrom(ScanViewModel::class.java)) {
+            return ScanViewModel(repository, preferences) as T
+        }
+        if (modelClass.isAssignableFrom(PlasticTypeViewModel::class.java)) {
+            return PlasticTypeViewModel(repository, preferences) as T
         }
         throw java.lang.IllegalArgumentException("Unknown ViewModel Class: " + modelClass.name)
     }
