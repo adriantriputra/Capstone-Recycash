@@ -94,4 +94,7 @@
     <string name="scan_success">Pindai berhasil. Satu Langkah lagi!</string>
     <string name="failed_fetch_points">Gagal untuk fetch poin</string>
     <string name="points_success">Poin berhasil ditambahkan!</string>
+    <string name="failed_to_get_user">Gagal mendapatkan user.</string>
+    <string name="points_added">Poin ditambahkan</string>
+    <string name="points_exchanged">Poin ditukarkan</string>
 </resources>

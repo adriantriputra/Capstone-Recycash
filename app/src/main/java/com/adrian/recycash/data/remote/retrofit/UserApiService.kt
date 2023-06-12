@@ -1,6 +1,7 @@
 package com.adrian.recycash.data.remote.retrofit
 
 import com.adrian.recycash.data.remote.response.AddPointsResponse
+import com.adrian.recycash.data.remote.response.HistoryResponse
 import com.adrian.recycash.data.remote.response.LoginRequest
 import com.adrian.recycash.data.remote.response.LoginResponse
 import com.adrian.recycash.data.remote.response.PointsResponse
@@ -44,4 +45,9 @@ interface UserApiService {
     fun savePoints(
         @Header("Authorization") token: String
     ): Call<AddPointsResponse>
+
+    @GET("listpointhistory")
+    fun getPointHistory(
+        @Header("Authorization") token: String
+    ): Call<List<HistoryResponse>>
 }

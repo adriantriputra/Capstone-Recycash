@@ -87,7 +87,7 @@ class ProfileFragment : Fragment() {
                 }
 
                 is Repository.UserResult.Error -> {
-                    Snackbar.make(binding.root, "Failed to get user", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, getString(R.string.failed_to_get_user), Snackbar.LENGTH_SHORT).show()
                     Log.d(TAG, "onRespose error: ${userResult.message}")
                 }
             }

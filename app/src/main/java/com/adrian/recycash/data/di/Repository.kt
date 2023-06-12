@@ -4,6 +4,7 @@ import android.util.Log
 import com.adrian.recycash.data.remote.response.AddPointsResponse
 import com.adrian.recycash.data.remote.response.Articles
 import com.adrian.recycash.data.remote.response.ArticlesResponse
+import com.adrian.recycash.data.remote.response.HistoryResponse
 import com.adrian.recycash.data.remote.response.LoginRequest
 import com.adrian.recycash.data.remote.response.LoginResponse
 import com.adrian.recycash.data.remote.response.PointsResponse
@@ -235,7 +236,7 @@ class Repository private constructor(
     suspend fun savePoints(token: String): AddPointsResult {
         val client = userApiConfig.getApiService.savePoints(token)
 
-        return suspendCoroutine {  continuation ->
+        return suspendCoroutine { continuation ->
             client.enqueue(object : Callback<AddPointsResponse> {
                 override fun onResponse(
                     call: Call<AddPointsResponse>,
@@ -260,6 +261,41 @@ class Repository private constructor(
             })
         }
     }
+
+    suspend fun getPointHistory(token: String): HistoryResult {
+        val client = userApiConfig.getApiService.getPointHistory(token)
+
+        return suspendCoroutine { continuation ->
+            client.enqueue(object : Callback<List<HistoryResponse>> {
+                override fun onResponse(
+                    call: Call<List<HistoryResponse>>,
+                    response: Response<List<HistoryResponse>>
+                ) {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+                        if (responseBody != null) {
+                            continuation.resume(HistoryResult.Success(responseBody))
+                        } else {
+                            val errorMessage = "Unknown error occurred"
+                            Log.e(TAG, "onResponse: Response body is null")
+                            continuation.resume(HistoryResult.Error(errorMessage))
+                        }
+                    } else {
+                        val errorMessage = "Failed to fetch history: ${response.code()}"
+                        Log.e(TAG, "onResponse: $errorMessage")
+                        continuation.resume(HistoryResult.Error(errorMessage))
+                    }
+                }
+
+                override fun onFailure(call: Call<List<HistoryResponse>>, t: Throwable) {
+                    val errorMessage = "Failed to fetch history: ${t.message}"
+                    Log.e(TAG, "onFailure: $errorMessage")
+                    continuation.resume(HistoryResult.Error(errorMessage))
+                }
+            })
+        }
+    }
+
 
     sealed class ArticlesResult {
         data class Success(val articles: ArrayList<Articles>) : ArticlesResult()
@@ -289,6 +325,11 @@ class Repository private constructor(
     sealed class AddPointsResult {
         data class Success(val response: AddPointsResponse) : AddPointsResult()
         data class Error(val message: String) : AddPointsResult()
+    }
+
+    sealed class HistoryResult {
+        data class Success(val history: List<HistoryResponse?>) : HistoryResult()
+        data class Error(val message: String) : HistoryResult()
     }
 
     companion object {

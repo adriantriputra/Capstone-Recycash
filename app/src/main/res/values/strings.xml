@@ -93,4 +93,7 @@
     <string name="scan_success">Scan successful! One more step!</string>
     <string name="failed_fetch_points">Failed to fetch points.</string>
     <string name="points_success">Points added successfully!</string>
+    <string name="failed_to_get_user">Failed to get user</string>
+    <string name="points_added">Points added</string>
+    <string name="points_exchanged">Points exchanged</string>
 </resources>

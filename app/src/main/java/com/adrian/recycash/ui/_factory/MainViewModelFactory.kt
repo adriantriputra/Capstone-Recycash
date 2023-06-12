@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.adrian.recycash.data.di.Injection
 import com.adrian.recycash.data.di.Repository
 import com.adrian.recycash.helper.LoginPreferences
+import com.adrian.recycash.ui.history.HistoryViewModel
 import com.adrian.recycash.ui.home.HomeViewModel
 import com.adrian.recycash.ui.home.scan.PlasticTypeViewModel
 import com.adrian.recycash.ui.home.scan.ScanViewModel
@@ -29,6 +30,9 @@ class MainViewModelFactory private constructor(
         }
         if (modelClass.isAssignableFrom(PlasticTypeViewModel::class.java)) {
             return PlasticTypeViewModel(repository, preferences) as T
+        }
+        if (modelClass.isAssignableFrom(HistoryViewModel::class.java)) {
+            return HistoryViewModel(repository, preferences) as T
         }
         throw java.lang.IllegalArgumentException("Unknown ViewModel Class: " + modelClass.name)
     }
