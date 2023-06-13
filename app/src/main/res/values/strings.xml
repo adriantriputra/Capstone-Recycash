@@ -21,7 +21,6 @@
     <string name="ed_name_hint">Full name</string>
     <string name="content_desc_phone">Enter your phone number</string>
     <string name="ed_phone_hint">Phone number</string>
-    <string name="content_desc_password">Enter your password</string>
     <string name="msg_greeting_placeholder">Hi, user!</string>
     <string name="msg_reminder">Don\'t forget to exchange your bottle!</string>
     <string name="tv_points_count_placeholder">0</string>
@@ -128,4 +127,17 @@
     <string name="type_6">Type 6: PS</string>
     <string name="type_7">Type 7: Other</string>
     <string name="tv_exchange_title">Exchange</string>
+    <string name="gopay">GoPay</string>
+    <string name="shopeepay">ShopeePay</string>
+    <string name="e_wallet">E-Wallet</string>
+    <string name="ovo">OVO</string>
+    <string name="dana">DANA</string>
+    <string name="linkaja">LinkAja</string>
+    <string name="doku">DOKU</string>
+    <string name="isaku">iSaku</string>
+    <string name="voucher">Voucher</string>
+    <string name="kopken">KopKen</string>
+    <string name="starbucks">Starbucks</string>
+    <string name="pulsa">Pulsa</string>
+    <string name="alfagift">Alfagift</string>
 </resources>

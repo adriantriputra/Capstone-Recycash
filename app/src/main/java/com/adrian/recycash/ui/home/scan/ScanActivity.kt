@@ -1,7 +1,6 @@
 package com.adrian.recycash.ui.home.scan
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -19,9 +18,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import com.adrian.recycash.R
 import com.adrian.recycash.databinding.ActivityScanBinding
 import com.adrian.recycash.helper.createCustomTempFile
