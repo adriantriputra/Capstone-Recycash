@@ -2,11 +2,13 @@ package com.adrian.recycash.ui.home
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -174,8 +176,21 @@ class HomeFragment : Fragment() {
     }
 
     private fun setArticleList(articles: ArrayList<Articles>) {
-        val articleAdapter = ArticleAdapter(articles)
+        val articleAdapter = ArticleAdapter(articles){
+            openLink(it.url)
+        }
         binding.rvArticles.adapter = articleAdapter
+    }
+
+    private fun openLink(url: String?) {
+        val articlesIntent = Intent(Intent.ACTION_VIEW)
+        articlesIntent.data = Uri.parse(url)
+
+        if (articlesIntent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivity(articlesIntent)
+        } else {
+            Toast.makeText(requireContext(), "No web browser app found", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun showProgressBar(value: Boolean) {

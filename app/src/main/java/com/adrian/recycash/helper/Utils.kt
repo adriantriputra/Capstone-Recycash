@@ -2,13 +2,11 @@ package com.adrian.recycash.helper
 
 import android.content.ContentResolver
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Environment
+import android.widget.EditText
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -17,7 +15,6 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 private const val FILENAME_FORMAT = "dd-MMM-yyyy"
-private const val MAXIMUM_SIZE = 1000000
 
 val timeStamp: String = SimpleDateFormat(
     FILENAME_FORMAT,
@@ -44,25 +41,19 @@ fun uriToFile(selectedImg: Uri, context: Context): File {
     return myFile
 }
 
-fun reduceFileImage(file: File): File {
-    val bitmap = BitmapFactory.decodeFile(file.path)
-    var compressQuality = 100
-    var streamLength: Int
-
-    do {
-        val bmpStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream)
-        val bmpPicByteArray = bmpStream.toByteArray()
-        streamLength = bmpPicByteArray.size
-        compressQuality -= 5
-    } while (streamLength > MAXIMUM_SIZE)
-
-    bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
-    return file
-}
-
 fun ImageView.loadImage(url: String?) {
     Glide.with(this.context)
         .load(url)
         .into(this)
 }
+
+fun EditText.onFocusLost(action: () -> Unit) {
+    setOnFocusChangeListener { _, hasFocus ->
+        if (!hasFocus) {
+            action()
+        }
+    }
+}
+
+val EditText.trimmedText: String
+    get() = text.toString().trim()

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.scan.PlasticTypeListActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="32dp">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="@string/content_desc_backarrow"
+            android:src="@drawable/ic_backarrow_black_32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_plastic_type_list_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/font_inter_extrabold"
+            android:text="@string/tv_plastic_type_list_title"
+            android:textAlignment="center"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_back" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_plastic_types"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_plastic_type_list_title"
+            tools:listitem="@layout/item_plastic_types" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -4,10 +4,14 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageButton
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.datastore.core.DataStore
@@ -21,12 +25,16 @@ import com.adrian.recycash.R
 import com.adrian.recycash.data.di.Repository
 import com.adrian.recycash.databinding.FragmentLoginBinding
 import com.adrian.recycash.helper.LoginPreferences
+import com.adrian.recycash.helper.onFocusLost
+import com.adrian.recycash.helper.trimmedText
 import com.adrian.recycash.ui._factory.AuthViewModelFactory
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -49,6 +57,12 @@ class LoginFragment : Fragment() {
 
     private var dataStoreListener: DataStoreListener? = null
 
+    private lateinit var emailTextInputLayout: TextInputLayout
+    private lateinit var passwordTextInputLayout: TextInputLayout
+    private lateinit var emailEditText: EditText
+    private lateinit var passwordEditText: EditText
+    private lateinit var loginButton: MaterialButton
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,6 +75,20 @@ class LoginFragment : Fragment() {
         backButton.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
+
+        emailTextInputLayout = binding.emailInputLayout
+        passwordTextInputLayout = binding.passwordInputLayout
+        emailEditText = binding.edEmail
+        passwordEditText = binding.edPassword
+        loginButton = binding.btnLogin
+
+        loginButton.isEnabled = false
+
+        emailEditText.onFocusLost(::validateEmail)
+        passwordEditText.onFocusLost(::validatePassword)
+
+        emailEditText.addTextChangedListener(loginTextWatcher)
+        passwordEditText.addTextChangedListener(loginTextWatcher)
 
         return root
     }
@@ -100,7 +128,7 @@ class LoginFragment : Fragment() {
                     }
                 }
                 is Repository.LoginResult.Error -> {
-                    view.let { it1 ->
+                    binding.root.let { it1 ->
                         Snackbar.make(it1, loginResult.message, Snackbar.LENGTH_LONG).show()
                     }
                     Log.e(TAG, "onResponse error: ${loginResult.message}")
@@ -114,11 +142,11 @@ class LoginFragment : Fragment() {
     }
 
     private fun login(){
-        val email = binding.edEmail.text.toString().trim()
-        val password = binding.edPassword.text.toString().trim()
+        val email = emailEditText.text.toString().trim()
+        val password = passwordEditText.text.toString().trim()
 
         if (email.isEmpty() || password.isEmpty()){
-            view?.let { Snackbar.make(it, getString(R.string.empty_fields), Snackbar.LENGTH_LONG).show() }
+            binding.root.let { Snackbar.make(it, getString(R.string.empty_fields), Snackbar.LENGTH_LONG).show() }
         } else {
             loginViewModel.login(email, password)
         }
@@ -168,6 +196,54 @@ class LoginFragment : Fragment() {
             startActivity(Intent(requireContext(), MainActivity::class.java))
             requireActivity().finish()
         }
+    }
+
+    private val loginTextWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            // Not needed
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            // Not needed
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            updateLoginButtonState()
+        }
+    }
+
+    private fun validateEmail() {
+        val email = emailEditText.trimmedText
+        if (isValidEmail(email)) {
+            emailTextInputLayout.error = null
+        } else {
+            emailTextInputLayout.error = getString(R.string.invalid_email)
+        }
+        updateLoginButtonState()
+    }
+
+    private fun validatePassword() {
+        val password = passwordEditText.trimmedText
+        if (isValidPassword(password)) {
+            passwordTextInputLayout.error = null
+        } else {
+            passwordTextInputLayout.error = getString(R.string.invalid_password)
+        }
+        updateLoginButtonState()
+    }
+
+    private fun updateLoginButtonState() {
+        val isEmailValid = isValidEmail(emailEditText.trimmedText)
+        val isPasswordValid = isValidPassword(passwordEditText.trimmedText)
+        loginButton.isEnabled = isEmailValid && isPasswordValid
+    }
+
+    private fun isValidEmail(email: String): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    private fun isValidPassword(password: String): Boolean {
+        return password.length in 8..16
     }
 
     interface DataStoreListener {

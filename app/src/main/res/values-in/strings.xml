@@ -97,4 +97,38 @@
     <string name="failed_to_get_user">Gagal mendapatkan user.</string>
     <string name="points_added">Poin ditambahkan</string>
     <string name="points_exchanged">Poin ditukarkan</string>
+    <string name="coming_soon">Segera hadir!</string>
+    <string name="invalid_email">Email tidak valid</string>
+    <string name="invalid_password">Kata sandi harus 8–16 karakter</string>
+    <string name="tv_plastic_type_list_title">Jenis Plastik</string>
+    <string name="plastic_type_title_placeholder">Judul tipe plastik</string>
+    <string name="cancellation_confirm">Kamu ingin membatalkan?</string>
+    <string name="cancellation_message">Kamu tidak akan mendapatkan poin jika batal disini</string>
+    <string name="cancellation_yes">Ya</string>
+    <string name="cancellation_no">Tidak</string>
+
+    <string name="plastic_type_1">Polyethylene terephthalate</string>
+    <string name="plastic_type_1_description">Botol air, Toples, Tutup botol</string>
+    <string name="plastic_type_2">High-density polyethylene</string>
+    <string name="plastic_type_2_description">Botol sampo, Botol susu, Tas belanja</string>
+    <string name="plastic_type_3">Polyvinyl chloride</string>
+    <string name="plastic_type_3_description">Produk kebersihan, Pipa, Karpet plastik</string>
+    <string name="plastic_type_4">Low-density polyethylene</string>
+    <string name="plastic_type_4_description">Kantong kresek, Film plastik</string>
+    <string name="plastic_type_5">Polypropylene</string>
+    <string name="plastic_type_6">Polystyrene</string>
+    <string name="plastic_type_7">Lainnya</string>
+    <string name="plastic_type_5_description">Tutup yoghurt, Sedotan, Hanger baju</string>
+    <string name="plastic_type_6_description">Mainan, Tutup gelas kopi, Alat-alat plastik</string>
+    <string name="plastic_type_7_description">Botol bayi, Botol minum, Kaset CD</string>
+
+    <string name="type_1">Jenis 1: PETE</string>
+    <string name="type_2">Jenis 2: HDPE</string>
+    <string name="type_3">Jenis 3: V</string>
+    <string name="type_4">Jenis 4: LDPE</string>
+    <string name="type_5">Jenis 5: PP</string>
+    <string name="type_6">Jenis 6: PS</string>
+    <string name="type_7">Jenis 7: Other</string>
+
+    <string name="tv_exchange_title">Tukar</string>
 </resources>

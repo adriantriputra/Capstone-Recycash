@@ -3,6 +3,7 @@ package com.adrian.recycash.ui.home.scan
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
@@ -15,6 +16,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.adrian.recycash.R
 import com.adrian.recycash.data.di.Repository
+import com.adrian.recycash.data.local.PlasticTypeData
 import com.adrian.recycash.databinding.ActivityPlasticTypeBinding
 import com.adrian.recycash.helper.LoginPreferences
 import com.adrian.recycash.ui._factory.MainViewModelFactory
@@ -43,25 +45,39 @@ class PlasticTypeActivity : AppCompatActivity() {
 
         binding.clearButton.setOnClickListener {
             AlertDialog.Builder(this)
-                .setTitle("Do you want to cancel?")
-                .setMessage("You won't get any points if you leave at this phase.")
-                .setPositiveButton("Yes") { _, _ ->
+                .setTitle(getString(R.string.cancellation_confirm))
+                .setMessage(getString(R.string.cancellation_message))
+                .setPositiveButton(getString(R.string.cancellation_yes)) { _, _ ->
                     onBackPressed()
                 }
-                .setNegativeButton("No") { _, _ ->
+                .setNegativeButton(getString(R.string.cancellation_no)) { _, _ ->
                     // Do nothing
                 }.show()
         }
 
         binding.tvPlasticType.setOnClickListener {
-            // Do something
+            val intent = Intent(this, PlasticTypeListActivity::class.java)
+            startActivity(intent)
         }
 
         // Set up the spinner options
-        val options = listOf("Jenis 1: PET", "Jenis 2: HDPE", "Jenis 3: PC")
+        val options = PlasticTypeData.options(this)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, options)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinner.adapter = adapter
+
+        plasticTypeViewModel.addPointsResult.observe(this) { addPointsResult ->
+            when (addPointsResult) {
+                is Repository.AddPointsResult.Success -> {
+                    // Do nothing
+                }
+                is Repository.AddPointsResult.Error -> {
+                    Log.d(TAG, "onResponse error: ${addPointsResult.message}")
+                    Toast.makeText(this, getString(R.string.failed_fetch_points), Toast.LENGTH_SHORT).show()
+                    onBackPressed()
+                }
+            }
+        }
 
         plasticTypeViewModel.savePointsResult.observe(this) { savePointsResult ->
             when (savePointsResult) {
@@ -85,7 +101,12 @@ class PlasticTypeActivity : AppCompatActivity() {
         }
 
         binding.btnContinue.setOnClickListener {
-            plasticTypeViewModel.savePoints()
+            plasticTypeViewModel.addPoints()
+
+            // Delay the function call using a Handler
+            Handler().postDelayed({
+                plasticTypeViewModel.savePoints()
+            }, DELAY_MILLIS)
         }
     }
 
@@ -94,6 +115,7 @@ class PlasticTypeActivity : AppCompatActivity() {
     }
 
     companion object {
+        private const val DELAY_MILLIS = 1500L
         private const val TAG = "PlasticTypeActivity"
     }
 

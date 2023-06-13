@@ -8,9 +8,10 @@ import com.adrian.recycash.databinding.ItemArticlesBinding
 import com.bumptech.glide.Glide
 
 class ArticleAdapter(
-    private val articles: ArrayList<Articles>
+    private val articles: ArrayList<Articles>,
+    private val onItemClick: (article: Articles) -> Unit
 ) : RecyclerView.Adapter<ArticleAdapter.ListViewHolder>() {
-    class ListViewHolder(private val binding: ItemArticlesBinding) :
+    inner class ListViewHolder(private val binding: ItemArticlesBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(articles: Articles) = binding.apply {
             Glide.with(itemView.context)
@@ -18,6 +19,10 @@ class ArticleAdapter(
                 .into(binding.imgItem)
             tvArticleTitle.text = articles.title
             tvArticleDesc.text = articles.description
+
+            root.setOnClickListener {
+                onItemClick.invoke(articles)
+            }
         }
     }
 

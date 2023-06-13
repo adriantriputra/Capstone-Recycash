@@ -96,4 +96,36 @@
     <string name="failed_to_get_user">Failed to get user</string>
     <string name="points_added">Points added</string>
     <string name="points_exchanged">Points exchanged</string>
+    <string name="coming_soon">Coming soon!</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="invalid_password">Password must be 8–16 characters</string>
+    <string name="tv_plastic_type_list_title">Plastic Types</string>
+    <string name="plastic_type_title_placeholder">Plastic Type Title</string>
+    <string name="cancellation_confirm">Do you want to cancel?</string>
+    <string name="cancellation_message">You won\'t get any points if you leave at this phase.</string>
+    <string name="cancellation_yes">Yes</string>
+    <string name="cancellation_no">No</string>
+
+    <string name="plastic_type_1">Polyethylene terephthalate</string>
+    <string name="plastic_type_1_description">Water bottles, Jars, Caps</string>
+    <string name="plastic_type_2">High-density polyethylene</string>
+    <string name="plastic_type_2_description">Shampoo bottles, Grocery bags, Milk jugs</string>
+    <string name="plastic_type_3">Polyvinyl chloride</string>
+    <string name="plastic_type_3_description">Cleaning products, Pipes, Flooring</string>
+    <string name="plastic_type_4">Low-density polyethylene</string>
+    <string name="plastic_type_4_description">Plastic bags, Plastic films</string>
+    <string name="plastic_type_5">Polypropylene</string>
+    <string name="plastic_type_6">Polystyrene</string>
+    <string name="plastic_type_7">Other plastics</string>
+    <string name="plastic_type_5_description">Yoghurt caps, Straws, Hangers</string>
+    <string name="plastic_type_6_description">Toys, Coffee cup lids, Plastic utensils</string>
+    <string name="plastic_type_7_description">Baby bottles, Drinking bottles, CDs</string>
+    <string name="type_1">Type 1: PETE</string>
+    <string name="type_2">Type 2: HDPE</string>
+    <string name="type_3">Type 3: V</string>
+    <string name="type_4">Type 4: LDPE</string>
+    <string name="type_5">Type 5: PP</string>
+    <string name="type_6">Type 6: PS</string>
+    <string name="type_7">Type 7: Other</string>
+    <string name="tv_exchange_title">Exchange</string>
 </resources>

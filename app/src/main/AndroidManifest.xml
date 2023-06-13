@@ -33,6 +33,9 @@
         android:theme="@style/Theme.Recycash"
         tools:targetApi="31">
         <activity
+            android:name=".ui.home.scan.PlasticTypeListActivity"
+            android:exported="false" />
+        <activity
             android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>

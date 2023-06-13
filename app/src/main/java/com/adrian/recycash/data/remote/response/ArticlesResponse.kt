@@ -11,5 +11,6 @@ data class ArticlesResponse(
 data class Articles(
     @SerializedName("title") var title: String? = null,
     @SerializedName("description") var description: String? = null,
+    @SerializedName("url") var url: String? = null,
     @SerializedName("urlToImage") var urlToImage: String? = null,
 )

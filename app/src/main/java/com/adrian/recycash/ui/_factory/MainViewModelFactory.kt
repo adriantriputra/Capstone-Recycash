@@ -8,7 +8,6 @@ import com.adrian.recycash.helper.LoginPreferences
 import com.adrian.recycash.ui.history.HistoryViewModel
 import com.adrian.recycash.ui.home.HomeViewModel
 import com.adrian.recycash.ui.home.scan.PlasticTypeViewModel
-import com.adrian.recycash.ui.home.scan.ScanViewModel
 import com.adrian.recycash.ui.profile.ProfileViewModel
 
 class MainViewModelFactory private constructor(
@@ -24,9 +23,6 @@ class MainViewModelFactory private constructor(
         }
         if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
             return ProfileViewModel(repository, preferences) as T
-        }
-        if (modelClass.isAssignableFrom(ScanViewModel::class.java)) {
-            return ScanViewModel(repository, preferences) as T
         }
         if (modelClass.isAssignableFrom(PlasticTypeViewModel::class.java)) {
             return PlasticTypeViewModel(repository, preferences) as T

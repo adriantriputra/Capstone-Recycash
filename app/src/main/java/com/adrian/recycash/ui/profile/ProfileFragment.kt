@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -58,7 +59,13 @@ class ProfileFragment : Fragment() {
         loginPreferences = LoginPreferences.getInstance(requireContext().dataStore)
         auth = Firebase.auth
 
-        binding.cvChangePassword.setOnClickListener {  }
+        binding.cvChangePassword.setOnClickListener {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.coming_soon),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
         binding.cvChangeLanguage.setOnClickListener {
             val settingsIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
             startActivity(settingsIntent)
@@ -87,13 +94,17 @@ class ProfileFragment : Fragment() {
                 }
 
                 is Repository.UserResult.Error -> {
-                    Snackbar.make(binding.root, getString(R.string.failed_to_get_user), Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(
+                        binding.root,
+                        getString(R.string.failed_to_get_user),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                     Log.d(TAG, "onRespose error: ${userResult.message}")
                 }
             }
         }
 
-        if (!isGetUserCalled){
+        if (!isGetUserCalled) {
             setUpProfileData()
         }
     }
@@ -111,13 +122,13 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun setUpProfileData(){
+    private fun setUpProfileData() {
         val firebaseUser = auth.currentUser
         val notFound = getString(R.string.msg_phone_number_notfound)
 
         if (firebaseUser != null) {
-            with (binding) {
-                if (firebaseUser.photoUrl.toString().isNotEmpty()){
+            with(binding) {
+                if (firebaseUser.photoUrl.toString().isNotEmpty()) {
                     imgProfile.loadImage(firebaseUser.photoUrl.toString())
                 }
                 tvProfileName.text = firebaseUser.displayName
@@ -134,7 +145,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun logOut(){
+    private fun logOut() {
         AlertDialog.Builder(requireContext())
             .setMessage(getString(R.string.logout_confirmation))
             .setPositiveButton(getString(R.string.logout_yes)) { _, _ ->
