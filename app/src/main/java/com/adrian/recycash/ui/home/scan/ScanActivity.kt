@@ -120,7 +120,7 @@ class ScanActivity : AppCompatActivity() {
 
     private fun loadModel(): MappedByteBuffer {
         val assetManager = this.assets
-        val modelDescriptor = assetManager.openFd("model.tflite")
+        val modelDescriptor = assetManager.openFd("trained_model.tflite")
         val modelFileDescriptor = modelDescriptor.fileDescriptor
         val startOffset = modelDescriptor.startOffset
         val declaredLength = modelDescriptor.declaredLength
@@ -175,7 +175,7 @@ class ScanActivity : AppCompatActivity() {
         // Continue with further processing or display the result.
         val threshold = 0.5 // Adjust the threshold based on your needs
 
-        val label = if (predictionLabel <= threshold) {
+        val label = if (predictionLabel >= threshold) {
             // Predicted as the positive class (e.g., a bottle)
             "Bottle"
         } else {
