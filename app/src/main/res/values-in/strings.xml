@@ -144,4 +144,11 @@
     <string name="starbucks">Starbucks</string>
     <string name="pulsa">Pulsa</string>
     <string name="alfagift">Alfagift</string>
+    <string name="point_1">10</string>
+    <string name="point_2">20</string>
+    <string name="point_3">30</string>
+    <string name="point_4">40</string>
+    <string name="point_5">50</string>
+    <string name="point_6">60</string>
+    <string name="point_7">70</string>
 </resources>

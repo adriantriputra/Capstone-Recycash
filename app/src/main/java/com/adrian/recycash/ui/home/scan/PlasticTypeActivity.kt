@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -32,6 +33,9 @@ class PlasticTypeActivity : AppCompatActivity() {
     private val factory: MainViewModelFactory by lazy {
         MainViewModelFactory.getInstance(loginPreferences)
     }
+
+    private var selectedItem: Int = 0
+    private var intPlasticType: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +70,23 @@ class PlasticTypeActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinner.adapter = adapter
 
+        // Set up a listener to handle item selection
+        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                selectedItem = position
+                // Handle the selected option
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Handle the case when no option is selected
+            }
+        }
+
         plasticTypeViewModel.addPointsResult.observe(this) { addPointsResult ->
             when (addPointsResult) {
                 is Repository.AddPointsResult.Success -> {
@@ -83,6 +104,7 @@ class PlasticTypeActivity : AppCompatActivity() {
             when (savePointsResult) {
                 is Repository.AddPointsResult.Success -> {
                     val intent = Intent(this@PlasticTypeActivity, ScanOkActivity::class.java)
+                    intent.putExtra(SELECTED_EXTRA, selectedItem)
                     Toast.makeText(this, getString(R.string.points_success), Toast.LENGTH_SHORT).show()
                     startActivity(intent)
                     finish()
@@ -101,7 +123,8 @@ class PlasticTypeActivity : AppCompatActivity() {
         }
 
         binding.btnContinue.setOnClickListener {
-            plasticTypeViewModel.addPoints()
+            intPlasticType = selectedItem + 1
+            plasticTypeViewModel.addPoints(intPlasticType)
 
             // Delay the function call using a Handler
             Handler().postDelayed({
@@ -116,6 +139,7 @@ class PlasticTypeActivity : AppCompatActivity() {
 
     companion object {
         private const val DELAY_MILLIS = 1500L
+        private const val SELECTED_EXTRA = "SELECTED_EXTRA"
         private const val TAG = "PlasticTypeActivity"
     }
 

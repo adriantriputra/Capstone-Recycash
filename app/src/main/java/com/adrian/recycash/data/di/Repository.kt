@@ -205,8 +205,8 @@ class Repository private constructor(
         }
     }
 
-    suspend fun addPoints(token: String): AddPointsResult {
-        val client = userApiConfig.getApiService.addPoints(token)
+    suspend fun addPoints(token: String, type: Int): AddPointsResult {
+        val client = userApiConfig.getApiService.addPoints(token, type)
         return suspendCoroutine { continuation ->
             client.enqueue(object : Callback<AddPointsResponse> {
                 override fun onResponse(

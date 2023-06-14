@@ -24,13 +24,13 @@ class PlasticTypeViewModel(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun addPoints(){
+    fun addPoints(type: Int){
         _isLoading.postValue(true)
         viewModelScope.launch {
             val token = preferences.tokenFlow
                 .filterNotNull()
                 .first()
-            val result = repository.addPoints(token)
+            val result = repository.addPoints(token, type)
             _addPointsResult.postValue(result)
             _isLoading.postValue(false)
         }

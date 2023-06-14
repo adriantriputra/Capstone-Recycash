@@ -14,6 +14,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 
 interface UserApiService {
     @POST("register")
@@ -36,9 +37,10 @@ interface UserApiService {
         @Header("Authorization") token: String
     ): Call<PointsResponse>
 
-    @POST("point_record/1")
+    @POST("point_record/{type}")
     fun addPoints(
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String,
+        @Path("type") type: Int
     ): Call<AddPointsResponse>
 
     @PUT("totalpoint")
